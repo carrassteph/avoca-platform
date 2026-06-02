@@ -541,21 +541,6 @@ export default function EvaluationPanel({
                   const lines = transcripts[r.id] || []
                   const m = SCENARIO_METRICS[r.id] || { task: true, quality: true, guardrails: true }
 
-                  const MetricDot = ({ pass, title }) => (
-                    <span
-                      title={title}
-                      style={{
-                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                        width: 18, height: 18, borderRadius: 9, flexShrink: 0,
-                        background: pass ? 'var(--green-bg)' : 'var(--red-bg)',
-                        fontSize: 10, fontWeight: 700,
-                        color: pass ? 'var(--green-text)' : 'var(--red-text)',
-                      }}
-                    >
-                      {pass ? '✓' : '✗'}
-                    </span>
-                  )
-
                   return (
                     <div key={r.id}>
                       <button
@@ -571,15 +556,28 @@ export default function EvaluationPanel({
                       >
                         <ChevronRight size={14} style={{ color: 'var(--text-tertiary)', transform: isExpanded ? 'rotate(90deg)' : 'none', transition: 'transform 0.15s', flexShrink: 0 }} />
                         <span style={{ flex: 1, fontSize: 'var(--fs-body)', fontWeight: 500, color: 'var(--text-primary)' }}>{scenario?.label}</span>
-                        <div style={{ display: 'flex', gap: 4, marginRight: 10 }}>
-                          <MetricDot pass={m.task}       title="Task completion" />
-                          <MetricDot pass={m.quality}    title="Conversation quality" />
-                          <MetricDot pass={m.guardrails} title="Guardrails" />
-                        </div>
                         <ResultBadge result={r.result} />
                       </button>
                       {isExpanded && (
                         <div style={{ padding: '12px 16px', borderBottom: i < completedResults.length - 1 ? '1px solid var(--border)' : 'none', background: 'var(--surface-1)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                          {/* Metric pills */}
+                          <div style={{ display: 'flex', gap: 6 }}>
+                            {[
+                              { label: 'Task',       pass: m.task },
+                              { label: 'Quality',    pass: m.quality },
+                              { label: 'Guardrails', pass: m.guardrails },
+                            ].map(({ label, pass }) => (
+                              <span key={label} style={{
+                                display: 'inline-flex', alignItems: 'center', gap: 4,
+                                fontSize: 'var(--fs-label)', fontWeight: 500,
+                                background: pass ? 'var(--green-bg)' : 'var(--red-bg)',
+                                color: pass ? 'var(--green-text)' : 'var(--red-text)',
+                                padding: '3px 8px', borderRadius: 4,
+                              }}>
+                                {label} {pass ? '✓' : '✗'}
+                              </span>
+                            ))}
+                          </div>
                           {lines.map((line, j) => {
                             const isAgent = line.speaker === 'agent'
                             return (
