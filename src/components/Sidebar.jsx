@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom'
 import { Bot, LayoutTemplate, Activity, Building2, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 
 const NAV_TOP = [
-  { to: '/agents',     label: 'Agents',            Icon: Bot },
   { to: '/monitoring', label: 'Monitoring',         Icon: Activity },
+  { to: '/agents',     label: 'Agents',             Icon: Bot },
 ]
 
 const NAV_BOTTOM = [
