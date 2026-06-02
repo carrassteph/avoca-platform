@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus, Bot, Copy, Archive, Pencil, Phone, MoreHorizontal } from 'lucide-react'
 import { useApp } from '../../context/AppContext'
-import { BRANDS, REGIONS } from '../../data/mockData'
+import { REGIONS } from '../../data/mockData'
 import StatusBadge from '../../components/StatusBadge'
 import ConfirmModal from '../../components/ConfirmModal'
 import Tooltip from '../../components/Tooltip'
@@ -103,7 +103,7 @@ export default function AgentsList() {
         </select>
         <select value={brandFilter} onChange={e => setBrandFilter(e.target.value)} style={selectStyle}>
           <option value="all">All brands</option>
-          {BRANDS.map(b => <option key={b} value={b}>{b}</option>)}
+          {state.brands.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
         </select>
         <select value={regionFilter} onChange={e => setRegionFilter(e.target.value)} style={selectStyle}>
           <option value="all">All regions</option>

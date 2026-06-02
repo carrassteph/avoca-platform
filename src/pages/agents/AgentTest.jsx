@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft, Loader2 } from 'lucide-react'
 import { useApp } from '../../context/AppContext'
-import TestCall from './steps/TestCall'
+import EvaluationPanel from './steps/EvaluationPanel'
 
 export default function AgentTest() {
   const { id } = useParams()
@@ -86,7 +86,7 @@ export default function AgentTest() {
       </div>
 
       {/* TestCall */}
-      <TestCall
+      <EvaluationPanel
         key={testKey}
         template={template}
         brandFields={agent.fields}

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 import { useApp } from '../../context/AppContext'
 import TemplateSelection from './steps/TemplateSelection'
-import TestCall from './steps/TestCall'
+import EvaluationPanel from './steps/EvaluationPanel'
 import AgentEditor from './AgentEditor'
 
 export default function AgentWizard() {
@@ -29,17 +29,17 @@ export default function AgentWizard() {
   }
 
   function allRequiredFilled() {
-    const textFields = ['brandName', 'zipCodes', 'serviceTitanInstanceId', 'emergencyOverridePhone', 'primaryEscalationContact']
-    const textOk = textFields.every(k => (brandFields[k] || '').trim() !== '')
+    const brandOk = !!(brandFields.brandId)
     const hours = brandFields.hoursOfOperation
     const hoursOk = hours && typeof hours === 'object' && Object.values(hours).some(d => !d.closed)
-    return textOk && hoursOk
+    return brandOk && hoursOk
   }
 
   async function handleSaveDraft() {
     setIsSaving(true)
     await new Promise(r => setTimeout(r, 800))
     const payload = {
+      brandId: brandFields.brandId || null,
       brandName: brandFields.brandName || 'Unnamed brand',
       region: brandFields.region || '',
       status: 'draft',
@@ -202,7 +202,7 @@ export default function AgentWizard() {
 
       {/* Step 3 */}
       {step === 3 && !isEdit && (
-        <TestCall
+        <EvaluationPanel
           template={selectedTemplate}
           brandFields={brandFields}
           onPublish={handlePublish}

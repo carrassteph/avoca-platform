@@ -8,6 +8,8 @@ import AgentTest from './pages/agents/AgentTest'
 import TemplatesList from './pages/templates/TemplatesList'
 import TemplateEditor from './pages/templates/TemplateEditor'
 import Monitoring from './pages/monitoring/Monitoring'
+import BrandsList from './pages/brands/BrandsList'
+import BrandEditor from './pages/brands/BrandEditor'
 
 function AppLayout() {
   return (
@@ -35,6 +37,9 @@ export default function App() {
           <Route path="/templates/new" element={<TemplateEditor />} />
           <Route path="/templates/:id" element={<TemplateEditor />} />
           <Route path="/monitoring" element={<Monitoring />} />
+          <Route path="/brands" element={<BrandsList />} />
+          <Route path="/brands/new" element={<BrandEditor />} />
+          <Route path="/brands/:id" element={<BrandEditor />} />
           <Route path="*" element={<Navigate to="/agents" replace />} />
         </Route>
       </Routes>

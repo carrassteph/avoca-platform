@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { BRANDS, REGIONS } from '../../../data/mockData'
+import { REGIONS } from '../../../data/mockData'
 
 const BRAND_FIELDS = [
   { key: 'zipCodes',                 label: 'Service area (zip codes)',        type: 'textarea', placeholder: 'e.g. 02101, 02116, 02134 — comma separated' },

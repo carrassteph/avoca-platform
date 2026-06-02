@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from 'react'
-import { initialTemplates, initialAgents, defaultTemplateFields } from '../data/mockData'
+import { initialTemplates, initialAgents, initialBrands, defaultTemplateFields } from '../data/mockData'
 
 const AppContext = createContext(null)
 
@@ -100,6 +100,29 @@ function reducer(state, action) {
       return { ...state, agents: [...state.agents, copy] }
     }
 
+    case 'CREATE_BRAND': {
+      const newBrand = {
+        id: `brand-${Date.now()}`,
+        ...action.payload,
+        addedAt: new Date().toISOString().slice(0, 10),
+      }
+      return { ...state, brands: [...state.brands, newBrand] }
+    }
+    case 'UPDATE_BRAND': {
+      return {
+        ...state,
+        brands: state.brands.map(b =>
+          b.id === action.payload.id ? { ...b, ...action.payload } : b
+        ),
+      }
+    }
+    case 'DELETE_BRAND': {
+      return {
+        ...state,
+        brands: state.brands.filter(b => b.id !== action.payload.id),
+      }
+    }
+
     case 'SHOW_TOAST':
       return { ...state, toast: action.payload }
     case 'HIDE_TOAST':
@@ -114,6 +137,7 @@ export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
     templates: initialTemplates,
     agents: initialAgents,
+    brands: initialBrands,
     toast: null,
     _archiveError: null,
   })
